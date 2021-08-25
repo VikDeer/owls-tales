@@ -6,6 +6,7 @@
 }
 
 body {
+   overflow: hidden;
    background-image: url(files/background.png);
 }
 
@@ -32,7 +33,7 @@ h2 {
 
 .center {
    width: 70%;
-   height: 600px;
+   height: 100vh;
 }
 
 .parameters,
@@ -115,7 +116,3 @@ h2 {
 .parameters > div {
    height: 50%;
 }
-
-/*
-для экранов высотой 900 сделать блоки выше
-*/
