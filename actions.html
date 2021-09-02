@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>шо это</title>
+	<style type="text/css">
+
+	</style>
+</head>
+
+<body>
+
+	
+
+	<div class="main" id="0">
+		<button id="0">Первое действие</button>
+		<button id="1">Второе действие</button>
+	</div>
+
+	<img class="action-img" src="" width="100" height="100">
+	<h2 class="action-name"></h2>
+	<p class="action-text"></p>
+	<button class="action-button"></button>
+
+	<script>
+
+		class Place {
+			constructor (id, name, url, idLeft, idRight, idTop, idBottom, actID, actName, actIMG, actText, actBtn) {
+				this.id = id;
+				this.name = name;
+				this.background = url;
+				this.move = {
+					left: idLeft,
+					right: idRight,
+					top: idTop,
+					bottom: idBottom,
+				};
+				this.actions = {
+					id: actID,
+					name: actName,
+					img: actIMG,
+					text: actText,
+					button: actBtn,
+
+					letAct: function act() {
+
+					},
+				};
+			};
+		};
+		
+		let actIMG = document.querySelector('.action-img');
+		let actName = document.querySelector('.action-name');
+		let actText = document.querySelector('.action-text');
+		let actBtn = document.querySelector('.action-button');
+
+		let pageNum = 1;
+
+		class Action {
+			constructor (id, name, img, text, BTNtext, confirmText) {
+				this.id = id;
+				this.name = name;
+				this.background = img;
+				this.text = text;
+				this.BTNtext = BTNtext;
+				this.confirmText = confirmText;
+
+				this.placeAct = function () {
+					actIMG.src = this.background;
+					actName.textContent = this.name;
+					actText.textContent = this.text;
+					actBtn.textContent = this.BTNtext;
+					actBtn.id = this.id;
+				};
+
+				this.confirmAct = function () {
+					actText.textContent = this.pages[pageNum].text;
+					actBtn.textContent = this.pages[pageNum].BTNtext;
+				};
+				
+			};
+		};
+
+		let actions = [new Action ("0", "Покушац", "https://image.flaticon.com/icons/png/512/1922/1922422.png", "Перед вами тарелка еды", "Подойти и взять вилку", "Вы покушали!"),
+							new Action ("1", "Ппапить вады", "https://kingswater.ru/userfiles/image/img.png", "Выбрать хорошую воду бывает трудно...", "Взять наугад", "Вада уничтожена!!!")
+		];
+
+		actions[0].pages = {
+			1: {
+				text: "Стоя наесться не получится",
+				BTNtext: "Сесть за стол",
+			},
+			2: {
+				text: "Теперь всё готово",
+				BTNtext: "Поесть",
+			},
+		};
+		actions[1].pages = {
+			1: {
+				text: "Бутылка оказалась плотно закрыта",
+				BTNtext: "Поднапрячься",
+			},
+			2: {
+				text: "Никак не поддаётся",
+				BTNtext: "Поднапрячься",
+			},
+			3: {
+				text: "Ура, бутылка открыта!!",
+				BTNtext: "Попить вады",
+			},
+		};
+
+		let mainID = document.querySelector('.main').id;
+
+		// размещение действия
+		let buttons = document.querySelectorAll('button');
+
+		for (i = 0; i < buttons.length; i++) {
+			let buttonID = buttons[i].id;
+			buttons[i].onclick = function() {
+				actions[buttonID].placeAct();
+			};
+		};
+
+		// выполнение действия
+		actBtn.onclick = function() {
+			if ( pageNum <= Object.keys(actions[actBtn.id].pages).length ) {
+				actions[actBtn.id].confirmAct();
+				pageNum++;
+			} else {
+				alert (actions[actBtn.id].confirmText);
+				pageNum = 1;
+			};
+		};
+
+		actions[0].placeAct();
+
+		/*
+			локация содержит:
+			айди
+			название
+			фон
+			переходы
+			действия
+				айди, имя, картинка, текст
+			предметы
+				что лежит, что можно собрать
+					айди, картинка
+
+			действия = разговор с нпс
+			= предметы на локации?
+
+			разговор: айди, имя, картинка, текст, кнопка (кнопка продолжения, выбор из двух - приянть квест/уйти)
+			действие: айди, имя, картинка, текст, кнопка (только одна кнопка - выполнение действия)
+			поднятие предмета: айди, имя,картинка, текст, кнопка (выбор из двух - поднять/оставить)
+		*/
+
+	</script>
+</body>
+</html>
